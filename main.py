@@ -19,7 +19,7 @@ def main(dir_name: str):
 
             if last_mtime.get(fname):
                 if last_mtime.get(fname) < t:
-
+                    p.kill()
                     p = subprocess.Popen("python3 /Users/ilya/Documents/GitHub/Chords-WebApp/Chords-WebApp/bot.py",
                                          shell=True)
 
