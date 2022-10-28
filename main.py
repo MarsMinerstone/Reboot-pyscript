@@ -1,6 +1,5 @@
 import os
 import subprocess
-import asyncio
 
 
 def main(dir_name: str):
