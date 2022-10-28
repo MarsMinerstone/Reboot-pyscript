@@ -11,7 +11,6 @@ def main(dir_name: str):
     dirs = os.listdir(dir_name)
 
     while 1:
-        print("again")
         for fname in dirs:
             if fname == "__pycache__":
                 continue
