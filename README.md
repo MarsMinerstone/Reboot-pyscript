@@ -1,7 +1,15 @@
 # Reboot-pyscript
  
-change the bash command to yor own
+start python script with to arguments:
 
-start this script
+`python main.py /path/to/your/working/dir /path/to/main/script.py`
 
-paste path of main code's dir, script will start it by bash script by itself.
+or:
+
+`python3 main.py /path/to/your/working/dir /path/to/main/script.py`
+
+This program start your script with command:
+
+`python3 /path/to/main/script.py`
+
+You may change it if you need
