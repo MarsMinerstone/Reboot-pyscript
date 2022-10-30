@@ -1,6 +1,6 @@
 # Reboot-pyscript
  
-start python script with to arguments:
+start python script with two arguments:
 
 `python main.py /path/to/your/working/dir /path/to/main/script.py`
 
