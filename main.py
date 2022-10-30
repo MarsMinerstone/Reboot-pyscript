@@ -30,7 +30,7 @@ def pre_reloader():
         print(f"CustomArgumentException: second arguments must be correct file path.")
         return
 
-    print(reloader(path_to_dir, path_to_file))
+    reloader(path_to_dir, path_to_file)
 
 
 def reloader(path_to_dir: str, path_to_file: str):
