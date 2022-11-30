@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import time
 
 
 def keyboard_interrupt_hook(exctype, value, traceback):
@@ -30,27 +31,51 @@ def pre_reloader():
         print(f"CustomArgumentException: second arguments must be correct file path.")
         return
 
-    reloader(path_to_dir, path_to_file)
+    reloader(file_filter(path_to_dir), path_to_file)
 
 
-def reloader(path_to_dir: str, path_to_file: str):
+def file_filter(path_to_dir):
+    dirs = os.listdir(path_to_dir)
+
+    exclude = "/__pycache__ /venv /__init__.py /rebooter.py /base.db /.DS_Store /data"
+
+    to_remove = []
+
+    for fname in dirs:
+        if fname not in exclude:
+            if os.path.isdir(f"{path_to_dir}/{fname}"):
+                _dirs = file_filter(f"{path_to_dir}/{fname}")
+                dirs += _dirs
+                to_remove.append(fname)
+            elif "/" not in fname:
+                dirs[dirs.index(fname)] = path_to_dir + "/" + dirs[dirs.index(fname)]
+        else:
+            to_remove.append(fname)
+
+    for f in to_remove:
+        dirs.remove(f)
+
+    return dirs
+
+
+def reloader(files: str, path_to_file: str):
     """process reloader."""
     p = subprocess.Popen(f"python3 {path_to_file}", shell=True)
 
     last_mtime = {}
-    dirs = os.listdir(path_to_dir)
 
     while 1:
-        for fname in dirs:
-            if fname == "__pycache__":
-                continue
+        time.sleep(1)
+        for fname in files:
 
-            t = os.path.getmtime(f"{path_to_dir}/{fname}")
+            t = os.path.getmtime(fname)
 
             if last_mtime.get(fname):
                 if last_mtime.get(fname) < t:
+                    print(f"The file {fname} was changed. Restarting ...")
                     p.kill()
                     p = subprocess.Popen(f"python3 {path_to_file}", shell=True)
+                    print("Process restarted.")
 
             last_mtime[fname] = t
 
