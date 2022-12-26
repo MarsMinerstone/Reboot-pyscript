@@ -10,6 +10,8 @@ def keyboard_interrupt_hook(exctype, value, traceback):
         print("The process has been stopped")
     else:
         sys.__excepthook__(exctype, value, traceback)
+
+
 sys.excepthook = keyboard_interrupt_hook
 
 
@@ -48,7 +50,8 @@ def file_filter(path_to_dir):
                 dirs += _dirs
                 to_remove.append(fname)
             elif "/" not in fname:
-                dirs[dirs.index(fname)] = path_to_dir + "/" + dirs[dirs.index(fname)]
+                dirs[dirs.index(fname)] = path_to_dir + \
+                    "/" + dirs[dirs.index(fname)]
         else:
             to_remove.append(fname)
 
